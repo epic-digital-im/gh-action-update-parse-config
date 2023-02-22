@@ -21,7 +21,7 @@ const pkg = getPackageJson();
 (async () => {
   
   try {
-    const result = await makeRequest({
+    const config = {
       method: 'POST',
       url: `${process.env.INPUT_PARSE_SERVER_URL}config`,
       data: {
@@ -38,7 +38,9 @@ const pkg = getPackageJson();
         "_ApplicationId": process.env.INPUT_ARSE_APP_ID,
         "_MasterKey": process.env.INPUT_PARSE_MASTER_KEY,
       }
-    });
+    };
+    console.log(config);
+    const result = await makeRequest(config);
     console.log(result);
   } catch (err) {
     logError(err);
