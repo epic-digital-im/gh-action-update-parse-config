@@ -14,13 +14,14 @@ if (process.env.PACKAGEJSON_DIR) {
   process.chdir(process.env.GITHUB_WORKSPACE);
 }
 
+const ref = process.env.INPUT_REF || '';
 console.log('process.env.GITHUB_WORKSPACE', process.env.GITHUB_WORKSPACE);
 console.log('process.env.INPUT_REF', process.env.INPUT_REF);
 
 const workspace = process.env.GITHUB_WORKSPACE;
 const pkg = getPackageJson();
 
-const isProduction = process.env.INPUT_REF === 'production';
+const isProduction = ref.indexOf('production') > -1;
 
 const appId = isProduction 
   ? process.env.INPUT_PARSE_APP_ID
