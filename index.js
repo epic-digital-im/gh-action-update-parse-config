@@ -23,7 +23,7 @@ const pkg = getPackageJson();
   try {
     await makeRequest(
       'PUT', 
-      'https://api.canmonkey-staging.com/parse/config', 
+      process.env.PARSE_SERVER_URL, 
       {
         "appBundleVersion": pkg.version,
         "appVersion": pkg.appVersion
