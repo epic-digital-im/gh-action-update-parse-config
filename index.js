@@ -35,12 +35,14 @@ const pkg = getPackageJson();
         },
         "_method": 'PUT',
         "_ClientVersion": "js3.4.2",
-        "_ApplicationId": process.env.INPUT_ARSE_APP_ID,
+        "_ApplicationId": process.env.INPUT_PARSE_APP_ID,
         "_MasterKey": process.env.INPUT_PARSE_MASTER_KEY,
       }
     };
     console.log(config);
     const result = await makeRequest(config);
+    const resultData = JSON.parse(result);
+    if (resultData.error) throw new Error(resultData.error);
     console.log(result);
   } catch (err) {
     logError(err);
