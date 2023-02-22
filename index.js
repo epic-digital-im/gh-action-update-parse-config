@@ -15,15 +15,31 @@ if (process.env.PACKAGEJSON_DIR) {
 }
 
 console.log('process.env.GITHUB_WORKSPACE', process.env.GITHUB_WORKSPACE);
+console.log('process.env.INPUT_REF', process.env.INPUT_REF);
+
 const workspace = process.env.GITHUB_WORKSPACE;
 const pkg = getPackageJson();
+
+const isProduction = process.env.INPUT_REF === 'production';
+
+const appId = isProduction 
+  ? process.env.INPUT_PARSE_APP_ID
+  : process.env.INPUT_PARSE_APP_ID_STAGING;
+
+const masterKey = isProduction
+  ? process.env.INPUT_PARSE_MASTER_KEY
+  : process.env.INPUT_PARSE_MASTER_KEY_STAGING;
+
+const serverUrl = isProduction
+  ? process.env.INPUT_PARSE_SERVER_URL
+  : process.env.INPUT_PARSE_SERVER_URL_STAGING;
 
 (async () => {
   
   try {
     const config = {
       method: 'POST',
-      url: `${process.env.INPUT_PARSE_SERVER_URL}config`,
+      url: `${serverUrl}config`,
       data: {
         "params": {
           "appBundleVersion": pkg.version,
@@ -35,8 +51,8 @@ const pkg = getPackageJson();
         },
         "_method": 'PUT',
         "_ClientVersion": "js3.4.2",
-        "_ApplicationId": process.env.INPUT_PARSE_APP_ID,
-        "_MasterKey": process.env.INPUT_PARSE_MASTER_KEY,
+        "_ApplicationId": appId,
+        "_MasterKey": masterKey,
       }
     };
     console.log(config);
