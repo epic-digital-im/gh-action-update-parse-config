@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 const { existsSync } = require('fs');
 const { EOL } = require('os');
 const path = require('path');
-const request = require('request');
+const fetch = require('node-fetch');
 
 // Change working directory if user defined PACKAGEJSON_DIR
 if (process.env.PACKAGEJSON_DIR) {
@@ -84,31 +84,29 @@ function runInWorkspace(command, args) {
       }
     });
   });
-  //return execa(command, args, { cwd: workspace });
 }
 
 function makeRequest(method, url, params, masterKeyOnly) {
-  return new Promise((resolve, reject) => {
-    var options = {
-      'method': 'POST',
-      'url': url,
-      'headers': {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        "params": params,
-        "masterKeyOnly": masterKeyOnly,
-        "_method": method,
-        "_ApplicationId": process.env.INPUT_ARSE_APP_ID,
-        "_MasterKey": process.env.INPUT_PARSE_MASTER_KEY,
-      })
-    };
-    request(options, function (error, response) {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(response.body);
-      }
-    });
+  var myHeaders = new Headers();
+
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    "params": params,
+    "masterKeyOnly": masterKeyOnly,
+    "_method": method,
+    "_ApplicationId": process.env.INPUT_ARSE_APP_ID,
+    "_MasterKey": process.env.INPUT_PARSE_MASTER_KEY,
   });
+
+  var requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: raw,
+    redirect: 'follow'
+  };
+
+  return fetch(url, requestOptions);
 }
