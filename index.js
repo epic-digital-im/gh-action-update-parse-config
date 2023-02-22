@@ -23,7 +23,7 @@ const pkg = getPackageJson();
   try {
     await makeRequest(
       'PUT', 
-      process.env.PARSE_SERVER_URL, 
+      `${process.env.INPUT_PARSE_SERVER_URL}config`, 
       {
         "appBundleVersion": pkg.version,
         "appVersion": pkg.appVersion
@@ -99,8 +99,8 @@ function makeRequest(method, url, params, masterKeyOnly) {
         "params": params,
         "masterKeyOnly": masterKeyOnly,
         "_method": method,
-        "_ApplicationId": process.env.PARSE_APP_ID,
-        "_MasterKey": process.env.PARSE_MASTER_KEY,
+        "_ApplicationId": process.env.INPUT_ARSE_APP_ID,
+        "_MasterKey": process.env.INPUT_PARSE_MASTER_KEY,
       })
     };
     request(options, function (error, response) {
