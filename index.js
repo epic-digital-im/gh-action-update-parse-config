@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 const { existsSync } = require('fs');
 const { EOL } = require('os');
 const path = require('path');
-const makeRequest = require('./request');
+const { makeRequest } = require('./request');
 
 // Change working directory if user defined PACKAGEJSON_DIR
 if (process.env.PACKAGEJSON_DIR) {

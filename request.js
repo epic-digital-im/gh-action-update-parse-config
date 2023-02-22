@@ -40,4 +40,6 @@ async function makeRequest({
     });
 }
 
-export default makeRequest;
+module.exports = {
+    makeRequest,
+}
