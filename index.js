@@ -23,8 +23,7 @@ const pkg = getPackageJson();
   try {
     await makeRequest({
       method: 'POST',
-      hostname: process.env.INPUT_PARSE_SERVER_URL,
-      path: '/parse/config',
+      url: `${process.env.INPUT_PARSE_SERVER_URL}config`,
       data: {
         "params": {
           "appBundleVersion": pkg.version,

@@ -2,22 +2,19 @@ var https = require('follow-redirects').https;
 
 async function makeRequest({
     method, 
-    hostname,
-    path,
+    url,
     data,
 }) {
     return new Promise((resolve, reject) => {
         var options = {
             'method': method,
-            'hostname': hostname,
-            'path': path,
             'headers': {
                 'Content-Type': 'application/json'
             },
             'maxRedirects': 20
         };
             
-        var req = https.request(options, function (res) {
+        var req = https.request(url, options, function (res) {
             var chunks = [];
             
             res.on("data", function (chunk) {
