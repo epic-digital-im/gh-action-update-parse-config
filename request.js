@@ -1,4 +1,4 @@
-var https = require('follow-redirects').https;
+var https = require('https');
 
 async function makeRequest({
     method, 
