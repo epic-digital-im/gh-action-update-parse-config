@@ -20,20 +20,9 @@ console.log('process.env.INPUT_REF', process.env.INPUT_REF);
 
 const workspace = process.env.GITHUB_WORKSPACE;
 const pkg = getPackageJson();
-
-const isProduction = ref.indexOf('production') > -1;
-
-const appId = isProduction 
-  ? process.env.INPUT_PARSE_APP_ID
-  : process.env.INPUT_PARSE_APP_ID_STAGING;
-
-const masterKey = isProduction
-  ? process.env.INPUT_PARSE_MASTER_KEY
-  : process.env.INPUT_PARSE_MASTER_KEY_STAGING;
-
-const serverUrl = isProduction
-  ? process.env.INPUT_PARSE_SERVER_URL
-  : process.env.INPUT_PARSE_SERVER_URL_STAGING;
+const appId = process.env.INPUT_PARSE_APP_ID;
+const masterKey = process.env.INPUT_PARSE_MASTER_KEY;
+const serverUrl = process.env.INPUT_PARSE_SERVER_URL;
 
 (async () => {
   
